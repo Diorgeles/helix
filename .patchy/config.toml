@@ -1,0 +1,37 @@
+# main repository to fetch from
+repo = "helix-editor/helix"
+
+# the repository's branch
+remote-branch = "master"
+
+# This is the branch where you will see all result from patchy's work. Set it to any branch you want.
+# WARNING: Make sure you do not store any important work on this branch. It will be erased.
+local-branch = "patchy"
+
+# List of pull requests which you would like to merge
+# TIP: Add comments above pull requests to help yourself understand which PRs do what
+pull-requests = [
+  # https://github.com/helix-editor/helix/pull/13133 -- Blame
+  # "13133",
+  # https://github.com/helix-editor/helix/pull/13053 -- Local search
+  # "13053"
+  # https://github.com/helix-editor/helix/pull/11441 -- Working preview scrolling
+  # "11441",
+  # https://github.com/helix-editor/helix/pull/5768 -- File-tree
+  # "5768"
+  # https://github.com/helix-editor/helix/pull/13565 -- Bufferline
+  # "13565",
+  # https://github.com/helix-editor/helix/pull/13344 -- Bufferline parent dir
+  "13344",
+  # https://github.com/helix-editor/helix/pull/8362 -- Scrolling Bufferline
+  "8362",
+  # https://github.com/helix-editor/helix/pull/14072 -- Auto Scrolling Bufferline
+  # "14072",
+  # https://github.com/helix-editor/helix/pull/5702 -- Highlight all search matches in document
+  # "5702",
+  # https://github.com/helix-editor/helix/pull/14292 -- Hunk
+  # "14292",
+]
+
+# An optional list of patches to apply, more on them later
+patches = []
