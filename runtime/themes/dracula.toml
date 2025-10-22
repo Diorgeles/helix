@@ -93,11 +93,11 @@
 
 "ui.background"                   = { fg    = "foreground",      bg = "background"                          }
 "ui.cursor"                       = { fg    = "background",      bg = "purple",        modifiers = ["dim"]  }
-"ui.cursor.insert"                = { fg    = "background",      bg = "green",         modifiers = ["dim"]  }	
+"ui.cursor.insert"                = { fg    = "background",      bg = "green",         modifiers = ["dim"]  }
 "ui.cursor.match"                 = { fg    = "foreground",      bg = "grey"                                }
-"ui.cursor.normal"                = { fg    = "background",      bg = "purple",        modifiers = ["dim"]  }	
-"ui.cursor.primary.insert"        = { fg    = "background",      bg = "green"                               }	
-"ui.cursor.primary.normal"        = { fg    = "background",      bg = "purple"                              }	
+"ui.cursor.normal"                = { fg    = "background",      bg = "purple",        modifiers = ["dim"]  }
+"ui.cursor.primary.insert"        = { fg    = "background",      bg = "green"                               }
+"ui.cursor.primary.normal"        = { fg    = "background",      bg = "purple"                              }
 "ui.cursor.primary.select"        = { fg    = "background",      bg = "cyan"                                }
 "ui.cursor.select"                = { fg    = "background",      bg = "cyan",          modifiers = ["dim"]  }
 "ui.cursorline.primary"           = {                            bg = "cursorline"                          }
@@ -146,14 +146,13 @@ cursorline        = "#2d303e"
 cyan              = "#8be9fd"
 darker            = "#222430"
 foreground        = "#f8f8f2"
-green             = "#50fa7b" 
+green             = "#50fa7b"
 grey              = "#666771"
 indent            = "#56596a"
-orange            = "#ffb86c" 
+orange            = "#ffb86c"
 pink              = "#ff79c6"
-purple            = "#BD93F9" 
+purple            = "#BD93F9"
 red               = "#ff5555"
 selection         = "#363848"
 whitespace        = "#586693"
-yellow            = "#f1fa8c" 
-
+yellow            = "#f1fa8c"
