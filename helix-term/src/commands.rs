@@ -3202,7 +3202,20 @@ fn buffer_picker(cx: &mut Context) {
                 .into()
         }),
     ];
-    let initial_cursor = if items.len() <= 1 { 0 } else { 1 };
+
+    let initial_cursor = if cx
+        .editor
+        .config()
+        .buffer_picker
+        .start_position
+        .is_previous()
+        && !items.is_empty()
+    {
+        1
+    } else {
+        0
+    };
+
     let picker = Picker::new(columns, 2, items, (), |cx, meta, action| {
         cx.editor.switch(meta.id, action);
     })
@@ -6505,6 +6518,14 @@ fn shell_prompt_for_behavior(cx: &mut Context, prompt: Cow<'static, str>, behavi
 fn suspend(_cx: &mut Context) {
     #[cfg(not(windows))]
     {
+        // SAFETY: These are calls to standard POSIX functions.
+        // Unsafe is necessary since we are calling outside of Rust.
+        let is_session_leader = unsafe { libc::getpid() == libc::getsid(0) };
+
+        // If helix is the session leader, there is nothing to suspend to, so skip
+        if is_session_leader {
+            return;
+        }
         _cx.block_try_flush_writes().ok();
         signal_hook::low_level::raise(signal_hook::consts::signal::SIGTSTP).unwrap();
     }
