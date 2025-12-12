@@ -1666,7 +1666,7 @@ Languages</a> guide for more language configuration information.</p>
 <tr><td>adl</td><td>✓</td><td>✓</td><td>✓</td><td></td><td></td><td></td></tr>
 <tr><td>agda</td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>alloy</td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td>amber</td><td>✓</td><td></td><td></td><td></td><td></td><td><code>amber-lsp</code></td></tr>
+<tr><td>amber</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td><code>amber-lsp</code></td></tr>
 <tr><td>astro</td><td>✓</td><td></td><td></td><td></td><td></td><td><code>astro-ls</code></td></tr>
 <tr><td>awk</td><td>✓</td><td>✓</td><td></td><td></td><td></td><td><code>awk-language-server</code></td></tr>
 <tr><td>bash</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td><code>bash-language-server</code></td></tr>
@@ -1888,6 +1888,7 @@ Languages</a> guide for more language configuration information.</p>
 <tr><td>regex</td><td>✓</td><td></td><td></td><td></td><td>✓</td><td></td></tr>
 <tr><td>rego</td><td>✓</td><td></td><td></td><td></td><td></td><td><code>regols</code></td></tr>
 <tr><td>rescript</td><td>✓</td><td>✓</td><td></td><td></td><td></td><td><code>rescript-language-server</code></td></tr>
+<tr><td>ripple</td><td>✓</td><td></td><td></td><td></td><td></td><td><code>ripple-language-server</code></td></tr>
 <tr><td>rmarkdown</td><td>✓</td><td></td><td>✓</td><td></td><td></td><td><code>R</code></td></tr>
 <tr><td>robot</td><td>✓</td><td></td><td></td><td></td><td></td><td><code>robotframework_ls</code></td></tr>
 <tr><td>robots.txt</td><td>✓</td><td>✓</td><td></td><td>✓</td><td></td><td></td></tr>
@@ -1924,7 +1925,7 @@ Languages</a> guide for more language configuration information.</p>
 <tr><td>supercollider</td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>svelte</td><td>✓</td><td></td><td>✓</td><td></td><td></td><td><code>svelteserver</code></td></tr>
 <tr><td>sway</td><td>✓</td><td>✓</td><td>✓</td><td></td><td></td><td><code>forc</code></td></tr>
-<tr><td>swift</td><td>✓</td><td>✓</td><td></td><td></td><td>✓</td><td><code>sourcekit-lsp</code></td></tr>
+<tr><td>swift</td><td>✓</td><td>✓</td><td>✓</td><td></td><td>✓</td><td><code>sourcekit-lsp</code></td></tr>
 <tr><td>systemd</td><td>✓</td><td></td><td></td><td></td><td></td><td><code>systemd-lsp</code></td></tr>
 <tr><td>systemverilog</td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>t32</td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -1966,6 +1967,7 @@ Languages</a> guide for more language configuration information.</p>
 <tr><td>wgsl</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td><code>wgsl-analyzer</code></td></tr>
 <tr><td>wikitext</td><td>✓</td><td></td><td></td><td></td><td></td><td><code>wikitext-lsp</code></td></tr>
 <tr><td>wit</td><td>✓</td><td></td><td>✓</td><td></td><td></td><td></td></tr>
+<tr><td>woodpecker-ci</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td><code>yaml-language-server</code></td></tr>
 <tr><td>wren</td><td>✓</td><td>✓</td><td>✓</td><td></td><td></td><td></td></tr>
 <tr><td>xit</td><td>✓</td><td></td><td></td><td></td><td></td><td></td></tr>
 <tr><td>xml</td><td>✓</td><td>✓</td><td>✓</td><td></td><td>✓</td><td></td></tr>
@@ -3311,12 +3313,14 @@ in its <code>textobjects.scm</code> file, function navigation should also work a
 <code>function.movement</code> should be defined only if the node captured by <code>function.around</code>
 doesn't make sense in a navigation context.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="adding-indent-queries"><a class="header" href="#adding-indent-queries">Adding indent queries</a></h2>
-<p>Helix uses tree-sitter to correctly indent new lines. This requires a tree-
-sitter grammar and an <code>indent.scm</code> query file placed in <code>runtime/queries/ {language}/indents.scm</code>. The indentation for a line is calculated by traversing
-the syntax tree from the lowest node at the beginning of the new line (see
-<a href="guides/indent.html#indent-queries">Indent queries</a>). Each of these nodes contributes to the total
-indent when it is captured by the query (in what way depends on the name of
-the capture.</p>
+<p>Helix uses tree-sitter to correctly indent new lines. This requires a
+tree-sitter grammar and an <code>indent.scm</code> query file placed in
+<code>runtime/queries/{language}/indents.scm</code>. The indentation for a line is
+calculated by traversing the syntax tree from the lowest node at the
+beginning of the new line (see <a href="guides/indent.html#indent-queries">Indent queries</a>).
+Each of these nodes contributes to the total indent when it is
+captured by the query (in what way depends on the name of
+the capture).</p>
 <p>Note that it matters where these added indents begin. For example,
 multiple indent level increases that start on the same line only increase
 the total indent level by 1. See <a href="guides/indent.html#capture-types">Capture types</a>.</p>
