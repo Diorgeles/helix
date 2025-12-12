@@ -3077,8 +3077,17 @@ fn file_picker_in_current_buffer_directory(cx: &mut Context) {
     let path = match doc_dir {
         Some(path) => path,
         None => {
-            cx.editor.set_error("current buffer has no path or parent");
-            return;
+            let cwd = helix_stdx::env::current_working_dir();
+            if !cwd.exists() {
+                cx.editor.set_error(
+                    "Current buffer has no parent and current working directory does not exist",
+                );
+                return;
+            }
+            cx.editor.set_error(
+                "Current buffer has no parent, opening file picker in current working directory",
+            );
+            cwd
         }
     };
 
@@ -5060,15 +5069,31 @@ fn format_selections(cx: &mut Context) {
         )
         .unwrap();
 
-    let edits = tokio::task::block_in_place(|| helix_lsp::block_on(future))
-        .ok()
-        .flatten()
-        .unwrap_or_default();
+    let text = doc.text().clone();
+    let doc_id = doc.id();
+    let doc_version = doc.version();
 
-    let transaction =
-        helix_lsp::util::generate_transaction_from_edits(doc.text(), edits, offset_encoding);
-
-    doc.apply(&transaction, view_id);
+    tokio::spawn(async move {
+        match future.await {
+            Ok(Some(res)) => {
+                let transaction =
+                    helix_lsp::util::generate_transaction_from_edits(&text, res, offset_encoding);
+                job::dispatch(move |editor, _compositor| {
+                    let Some(doc) = editor.document_mut(doc_id) else {
+                        return;
+                    };
+                    // Updating a desynced document causes problems with applying the transaction
+                    if doc.version() != doc_version {
+                        return;
+                    }
+                    doc.apply(&transaction, view_id);
+                })
+                .await
+            }
+            Err(err) => log::error!("format sections failed: {err}"),
+            Ok(None) => (),
+        }
+    });
 }
 
 fn join_selections_impl(cx: &mut Context, select_space: bool) {
